@@ -16,7 +16,10 @@ export class RedisCacheService {
     @Inject(CACHE_MANAGER) private readonly cache: Cache,
     private readonly configurationService: ConfigurationService
   ) {
-    this.client = cache.stores[0];
+    // Cache manager injects a Keyv instance but its type originates from a
+    // nested dependency; cast to align with our Keyv import and avoid the
+    // private-field mismatch error from TypeScript.
+    this.client = cache.stores[0] as unknown as Keyv;
 
     this.client.deserialize = (value) => {
       try {

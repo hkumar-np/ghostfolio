@@ -43,6 +43,30 @@
               />
             </div>
           </div>
+          <div class="d-flex my-3">
+            <div class="w-50" i18n>Create Login Account</div>
+            <div class="w-50">
+              <button
+                class="no-min-width"
+                color="primary"
+                mat-flat-button
+                (click)="onCreateUser()"
+              >
+                <ion-icon class="mr-1" name="person-add-outline" />
+                <span i18n>Create</span>
+              </button>
+              <div *ngIf="createdUserAccessToken" class="mt-2">
+                <div class="text-monospace" i18n>Access Token</div>
+                <div class="text-monospace small text-break">
+                  {{ createdUserAccessToken }}
+                </div>
+                <div class="text-monospace mt-2" i18n>Auth Token</div>
+                <div class="text-monospace small text-break">
+                  {{ createdUserAuthToken }}
+                </div>
+              </div>
+            </div>
+          </div>
           @if (hasPermissionToToggleReadOnlyMode) {
             <div class="d-flex my-3">
               <div class="w-50" i18n>Read-only Mode</div>

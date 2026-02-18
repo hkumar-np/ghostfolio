@@ -46,6 +46,7 @@ import {
   closeCircleOutline,
   ellipsisHorizontal,
   informationCircleOutline,
+  personAddOutline,
   syncOutline,
   trashOutline
 } from 'ionicons/icons';
@@ -87,6 +88,8 @@ export class GfAdminOverviewComponent implements OnDestroy, OnInit {
   public userCount: number;
   public user: User;
   public version: string;
+  public createdUserAccessToken?: string;
+  public createdUserAuthToken?: string;
 
   private unsubscribeSubject = new Subject<void>();
 
@@ -133,6 +136,7 @@ export class GfAdminOverviewComponent implements OnDestroy, OnInit {
       closeCircleOutline,
       ellipsisHorizontal,
       informationCircleOutline,
+      personAddOutline,
       syncOutline,
       trashOutline
     });
@@ -179,6 +183,24 @@ export class GfAdminOverviewComponent implements OnDestroy, OnInit {
 
   public onChangeCouponDuration(aCouponDuration: StringValue) {
     this.couponDuration = aCouponDuration;
+  }
+
+  public onCreateUser() {
+    this.dataService
+      .postUserAsAdmin()
+      .pipe(takeUntil(this.unsubscribeSubject))
+      .subscribe(({ accessToken, authToken }) => {
+        this.createdUserAccessToken = accessToken;
+        this.createdUserAuthToken = authToken;
+
+        this.snackBar.open(
+          $localize`New login account created. Tokens shown below.`,
+          undefined,
+          { duration: ms('5 seconds') }
+        );
+
+        this.changeDetectorRef.markForCheck();
+      });
   }
 
   public onDeleteCoupon(aCouponCode: string) {

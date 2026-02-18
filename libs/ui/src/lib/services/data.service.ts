@@ -795,6 +795,10 @@ export class DataService {
     return this.http.post<UserItem>('/api/v1/user', {});
   }
 
+  public postUserAsAdmin() {
+    return this.http.post<UserItem>('/api/v1/user/admin', {});
+  }
+
   public postWatchlistItem(watchlistItem: CreateWatchlistItemDto) {
     return this.http.post('/api/v1/watchlist', watchlistItem);
   }

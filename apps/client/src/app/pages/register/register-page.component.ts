@@ -34,6 +34,7 @@ export class GfRegisterPageComponent implements OnDestroy, OnInit {
   public hasPermissionForAuthToken: boolean;
   public hasPermissionForSubscription: boolean;
   public hasPermissionToCreateUser: boolean;
+  public hasPermissionToCreateUserAsAdmin: boolean;
   public historicalDataItems: LineChartItem[];
   public info: InfoItem;
 
@@ -75,6 +76,11 @@ export class GfRegisterPageComponent implements OnDestroy, OnInit {
       globalPermissions,
       permissions.createUserAccount
     );
+
+    this.hasPermissionToCreateUserAsAdmin = hasPermission(
+      globalPermissions,
+      permissions.accessAdminControl
+    );
   }
 
   public openShowAccessTokenDialog() {
@@ -84,7 +90,8 @@ export class GfRegisterPageComponent implements OnDestroy, OnInit {
     >(GfUserAccountRegistrationDialogComponent, {
       data: {
         deviceType: this.deviceType,
-        needsToAcceptTermsOfService: this.hasPermissionForSubscription
+        needsToAcceptTermsOfService: this.hasPermissionForSubscription,
+        createAsAdmin: this.hasPermissionToCreateUserAsAdmin
       },
       disableClose: true,
       height: this.deviceType === 'mobile' ? '98vh' : undefined,

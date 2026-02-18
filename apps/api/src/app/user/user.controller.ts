@@ -150,6 +150,23 @@ export class UserController {
     };
   }
 
+  @HasPermission(permissions.accessAdminControl)
+  @Post('admin')
+  @UseGuards(AuthGuard('jwt'), HasPermissionGuard)
+  public async createUserAsAdmin(): Promise<UserItem> {
+    const { accessToken, id, role } = await this.userService.createUser({
+      data: {
+        role: 'USER'
+      }
+    });
+
+    return {
+      accessToken,
+      role,
+      authToken: this.jwtService.sign({ id })
+    };
+  }
+
   @Put('setting')
   @UseGuards(AuthGuard('jwt'), HasPermissionGuard)
   public async updateUserSetting(@Body() data: UpdateUserSettingDto) {

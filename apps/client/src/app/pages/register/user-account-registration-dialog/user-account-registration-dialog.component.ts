@@ -74,8 +74,11 @@ export class GfUserAccountRegistrationDialogComponent {
   }
 
   public createAccount() {
-    this.dataService
-      .postUser()
+    const createUser$ = this.data.createAsAdmin
+      ? this.dataService.postUserAsAdmin()
+      : this.dataService.postUser();
+
+    createUser$
       .pipe(takeUntil(this.unsubscribeSubject))
       .subscribe(({ accessToken, authToken, role }) => {
         this.accessToken = accessToken;
