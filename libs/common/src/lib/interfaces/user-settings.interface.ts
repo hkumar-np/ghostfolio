@@ -14,6 +14,7 @@ export interface UserSettings {
   baseCurrency?: string;
   benchmark?: string;
   colorScheme?: ColorScheme;
+  currency?: string;
   dateRange?: DateRange;
   emergencyFund?: number;
   'filters.accounts'?: string[];
@@ -24,8 +25,10 @@ export interface UserSettings {
   holdingsViewMode?: HoldingsViewMode;
   isExperimentalFeatures?: boolean;
   isRestrictedView?: boolean;
+  email?: string;
   language?: string;
   locale?: string;
+  name?: string;
   performanceCalculationType?: PerformanceCalculationType;
   projectedTotalAmount?: number;
   retirementDate?: string;

@@ -1,3 +1,4 @@
+import { GfAdminUserCreateDialogComponent } from '@ghostfolio/client/components/admin-user-create-dialog/admin-user-create-dialog.component';
 import { UserDetailDialogParams } from '@ghostfolio/client/components/user-detail-dialog/interfaces/interfaces';
 import { GfUserDetailDialogComponent } from '@ghostfolio/client/components/user-detail-dialog/user-detail-dialog.component';
 import { ImpersonationStorageService } from '@ghostfolio/client/services/impersonation-storage.service';
@@ -51,6 +52,7 @@ import {
   contractOutline,
   ellipsisHorizontal,
   keyOutline,
+  personAddOutline,
   personOutline,
   trashOutline
 } from 'ionicons/icons';
@@ -120,6 +122,9 @@ export class GfAdminUsersComponent implements OnDestroy, OnInit {
     if (this.hasPermissionForSubscription) {
       this.displayedColumns = [
         'user',
+        'name',
+        'email',
+        'role',
         'country',
         'registration',
         'accounts',
@@ -132,6 +137,9 @@ export class GfAdminUsersComponent implements OnDestroy, OnInit {
     } else {
       this.displayedColumns = [
         'user',
+        'name',
+        'email',
+        'role',
         'registration',
         'accounts',
         'activities',
@@ -170,6 +178,7 @@ export class GfAdminUsersComponent implements OnDestroy, OnInit {
       contractOutline,
       ellipsisHorizontal,
       keyOutline,
+      personAddOutline,
       personOutline,
       trashOutline
     });
@@ -253,6 +262,34 @@ export class GfAdminUsersComponent implements OnDestroy, OnInit {
     }
 
     window.location.reload();
+  }
+
+  public onOpenCreateUserDialog() {
+    const dialogRef = this.dialog.open<GfAdminUserCreateDialogComponent>(
+      GfAdminUserCreateDialogComponent,
+      {
+        autoFocus: false,
+        width: '30rem'
+      }
+    );
+
+    dialogRef
+      .afterClosed()
+      .pipe(takeUntil(this.unsubscribeSubject))
+      .subscribe((result) => {
+        if (result?.authToken) {
+          const accessTokenLabel = $localize`Access Token`;
+          const authTokenLabel = $localize`Auth Token`;
+          const message = `${accessTokenLabel}: ${result.accessToken ?? '-'}\n${authTokenLabel}: ${result.authToken}`;
+
+          this.notificationService.alert({
+            message,
+            title: $localize`User created`
+          });
+
+          this.fetchUsers();
+        }
+      });
   }
 
   public onOpenUserDetailDialog(userId: string) {

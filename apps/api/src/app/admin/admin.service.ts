@@ -27,7 +27,8 @@ import {
   AdminUsersResponse,
   AssetProfileIdentifier,
   EnhancedSymbolProfile,
-  Filter
+  Filter,
+  UserSettings
 } from '@ghostfolio/common/interfaces';
 import { Sector } from '@ghostfolio/common/interfaces/sector.interface';
 import { MarketDataPreset } from '@ghostfolio/common/types';
@@ -887,6 +888,11 @@ export class AdminService {
         id: true,
         provider: true,
         role: true,
+        settings: {
+          select: {
+            settings: true
+          }
+        },
         subscriptions: {
           orderBy: {
             expiresAt: 'desc'
@@ -902,12 +908,23 @@ export class AdminService {
     });
 
     return usersWithAnalytics.map(
-      ({ _count, analytics, createdAt, id, provider, role, subscriptions }) => {
+      ({
+        _count,
+        analytics,
+        createdAt,
+        id,
+        provider,
+        role,
+        settings,
+        subscriptions
+      }) => {
         const daysSinceRegistration =
           differenceInDays(new Date(), createdAt) + 1;
         const engagement = analytics
           ? analytics.activityCount / daysSinceRegistration
           : undefined;
+
+        const userSettings = settings?.settings as UserSettings;
 
         const subscription =
           this.configurationService.get('ENABLE_FEATURE_SUBSCRIPTION') &&
@@ -917,8 +934,10 @@ export class AdminService {
 
         return {
           createdAt,
+          email: userSettings?.['email'],
           engagement,
           id,
+          name: userSettings?.['name'],
           provider,
           role,
           subscription,

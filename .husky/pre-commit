@@ -1,3 +1,5 @@
+export NX_DAEMON=false
+
 # Run linting and stop the commit process if any errors are found
 # --quiet suppresses warnings (temporary until all warnings are fixed)
 npm run affected:lint --base=main --head=HEAD --parallel=2 --quiet || exit 1

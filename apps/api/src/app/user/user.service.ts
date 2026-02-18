@@ -570,11 +570,15 @@ export class UserService {
 
   public async createUser(
     {
-      data
+      data,
+      profile
     }: {
-      data: Prisma.UserCreateInput;
+      data?: Prisma.UserCreateInput;
+      profile?: { email?: string; name?: string };
     } = { data: {} }
   ): Promise<User> {
+    data = data || {};
+
     if (!data.provider) {
       data.provider = 'ANONYMOUS';
     }
@@ -583,6 +587,18 @@ export class UserService {
       const hasAdmin = await this.hasAdmin();
 
       data.role = hasAdmin ? 'USER' : 'ADMIN';
+    }
+
+    const settingsData: UserSettings = {
+      currency: DEFAULT_CURRENCY
+    };
+
+    if (profile?.email) {
+      settingsData.email = profile.email;
+    }
+
+    if (profile?.name) {
+      settingsData.name = profile.name;
     }
 
     const user = await this.prismaService.user.create({
@@ -599,9 +615,7 @@ export class UserService {
         },
         settings: {
           create: {
-            settings: {
-              currency: DEFAULT_CURRENCY
-            }
+            settings: settingsData
           }
         }
       }

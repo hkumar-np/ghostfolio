@@ -8,6 +8,7 @@ import { PropertyService } from '@ghostfolio/api/services/property/property.serv
 import { HEADER_KEY_IMPERSONATION } from '@ghostfolio/common/config';
 import {
   DeleteOwnUserDto,
+  CreateUserDto,
   UpdateOwnAccessTokenDto,
   UpdateUserSettingDto
 } from '@ghostfolio/common/dtos';
@@ -153,10 +154,16 @@ export class UserController {
   @HasPermission(permissions.accessAdminControl)
   @Post('admin')
   @UseGuards(AuthGuard('jwt'), HasPermissionGuard)
-  public async createUserAsAdmin(): Promise<UserItem> {
+  public async createUserAsAdmin(
+    @Body() data: CreateUserDto
+  ): Promise<UserItem> {
     const { accessToken, id, role } = await this.userService.createUser({
       data: {
-        role: 'USER'
+        role: data?.role || 'USER'
+      },
+      profile: {
+        email: data?.email,
+        name: data?.name
       }
     });
 

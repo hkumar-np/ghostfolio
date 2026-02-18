@@ -1,0 +1,43 @@
+<h2 class="d-flex align-items-center mb-2" mat-dialog-title>
+  <ion-icon class="mr-2" name="person-add-outline" />
+  <span i18n>Create User</span>
+</h2>
+
+<form mat-dialog-content [formGroup]="form" (ngSubmit)="onCreate()">
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label i18n>Name</mat-label>
+    <input formControlName="name" matInput />
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label i18n>Email</mat-label>
+    <input formControlName="email" matInput type="email" />
+    <mat-error *ngIf="form.controls.email.invalid" i18n
+      >Please enter a valid email</mat-error
+    >
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="w-100">
+    <mat-label i18n>Role</mat-label>
+    <mat-select formControlName="role">
+      @for (role of roles; track role) {
+        <mat-option [value]="role">{{ role }}</mat-option>
+      }
+    </mat-select>
+  </mat-form-field>
+</form>
+
+<div class="d-flex justify-content-end mt-2" mat-dialog-actions>
+  <button mat-button type="button" (click)="onCancel()">
+    <span i18n>Cancel</span>
+  </button>
+  <button
+    color="primary"
+    mat-flat-button
+    type="button"
+    [disabled]="form.invalid || isSubmitting"
+    (click)="onCreate()"
+  >
+    <span i18n>Create</span>
+  </button>
+</div>

@@ -73,6 +73,7 @@ import {
   DataSource,
   MarketData,
   Order as OrderModel,
+  Role,
   Tag
 } from '@prisma/client';
 import { format, parseISO } from 'date-fns';
@@ -795,8 +796,10 @@ export class DataService {
     return this.http.post<UserItem>('/api/v1/user', {});
   }
 
-  public postUserAsAdmin() {
-    return this.http.post<UserItem>('/api/v1/user/admin', {});
+  public postUserAsAdmin(
+    payload: { name?: string; email?: string; role?: Role } = {}
+  ) {
+    return this.http.post<UserItem>('/api/v1/user/admin', payload);
   }
 
   public postWatchlistItem(watchlistItem: CreateWatchlistItemDto) {

@@ -1,6 +1,12 @@
 :host {
   display: block;
 
+  .page-header {
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+  }
+
   .gf-table {
     min-width: 100%;
 

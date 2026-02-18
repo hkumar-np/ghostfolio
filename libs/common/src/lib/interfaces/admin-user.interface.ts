@@ -9,6 +9,8 @@ export interface AdminUser {
   engagement: number;
   id: string;
   lastActivity: Date;
+  name?: string;
+  email?: string;
   provider: Provider;
   role: Role;
   subscription?: Subscription;

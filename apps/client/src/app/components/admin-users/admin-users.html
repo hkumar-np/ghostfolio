@@ -1,6 +1,18 @@
 <div class="container">
   <div class="row">
     <div class="col">
+      <div class="d-flex align-items-center justify-content-between mb-3">
+        <h2 class="m-0" i18n>Users</h2>
+        <button
+          class="no-min-width"
+          color="primary"
+          mat-flat-button
+          (click)="onOpenCreateUserDialog()"
+        >
+          <ion-icon class="mr-1" name="person-add-outline" />
+          <span i18n>Create User</span>
+        </button>
+      </div>
       <div class="overflow-x-auto">
         <table class="gf-table" mat-table [dataSource]="dataSource">
           <ng-container matColumnDef="user">
@@ -47,6 +59,63 @@
                   />
                 }
               </div>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="name">
+            <th
+              *matHeaderCellDef
+              class="mat-mdc-header-cell px-1 py-2"
+              mat-header-cell
+            >
+              <ng-container i18n>Name</ng-container>
+            </th>
+            <td
+              *matCellDef="let element"
+              class="mat-mdc-cell px-1 py-2"
+              mat-cell
+            >
+              <span class="text-truncate d-inline-block" [title]="element.name">
+                {{ element.name || '-' }}
+              </span>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="email">
+            <th
+              *matHeaderCellDef
+              class="mat-mdc-header-cell px-1 py-2"
+              mat-header-cell
+            >
+              <ng-container i18n>Email</ng-container>
+            </th>
+            <td
+              *matCellDef="let element"
+              class="mat-mdc-cell px-1 py-2"
+              mat-cell
+            >
+              <span class="text-break small" [title]="element.email">
+                {{ element.email || '-' }}
+              </span>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="role">
+            <th
+              *matHeaderCellDef
+              class="mat-mdc-header-cell px-1 py-2"
+              mat-header-cell
+            >
+              <ng-container i18n>Role</ng-container>
+            </th>
+            <td
+              *matCellDef="let element"
+              class="mat-mdc-cell px-1 py-2"
+              mat-cell
+            >
+              <span class="badge badge-light text-uppercase">{{
+                element.role
+              }}</span>
             </td>
           </ng-container>
 
