@@ -49,6 +49,11 @@ const locales = {
   FIXED_INCOME: $localize`Fixed Income`,
   LIQUIDITY: $localize`Liquidity`,
   REAL_ESTATE: $localize`Real Estate`,
+  BONDS_GIC: $localize`Bonds/GIC`,
+  EQUITIES: $localize`Equities`,
+  STRUCTURE_PRODUCTS: $localize`Structure Products`,
+  PRIVATE_CREDIT: $localize`Private Credit`,
+  LEVERAGE_BUYOUTS: $localize`Leverage Buyouts`,
 
   // AssetSubClass (enum)
   BOND: $localize`Bond`,
@@ -60,6 +65,20 @@ const locales = {
   PRECIOUS_METAL: $localize`Precious Metal`,
   PRIVATE_EQUITY: $localize`Private Equity`,
   STOCK: $localize`Stock`,
+  BANK: $localize`Bank`,
+  GIC_CAN: $localize`GIC - CAN`,
+  GIC_US: $localize`GIC - US`,
+  FIXED_DEPOSIT: $localize`Fixed Deposit`,
+  BONDS: $localize`Bonds`,
+  STOCKS: $localize`Stocks`,
+  ETFS: $localize`ETFS`,
+  CRYPTO_CURRENCY: $localize`Crypto Currency`,
+  FOREIGN_CURRENCY: $localize`Foreign Currency`,
+  MUTUAL_FUNDS: $localize`Mutual Funds`,
+  NOTES: $localize`Notes`,
+  RESIDENTIAL: $localize`Residential`,
+  COMMERCIAL: $localize`Commercial`,
+  PURPOSE_BUILD: $localize`Purpose Build`,
 
   // Benchmark
   ALL_TIME_HIGH: 'All time high',
