@@ -615,7 +615,8 @@ export class UserService {
         },
         settings: {
           create: {
-            settings: settingsData
+            // Cast typed settings into Prisma JSON input shape
+            settings: settingsData as Prisma.InputJsonValue
           }
         }
       }
